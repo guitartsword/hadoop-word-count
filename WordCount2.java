@@ -77,22 +77,31 @@ public class WordCount2 {
                     ) throws IOException, InterruptedException {
       String line = (caseSensitive) ?
           value.toString() : value.toString().toLowerCase();
+      String[] record = line.split(",");
+      if(record.length == 5){
+        line = record[3];
+      }
       for (String pattern : patternsToSkip) {
         line = line.replaceAll(pattern, "");
       }
       for (String pattern : patternsToSkipWord) {
         line = line.replaceAll(" " + pattern + " ", " ");
       }
-      String[] words = line.split("[ \\t\\n\\r\\f]+");
+      line = line.trim();
+      String[] words = line.split("[ \\t\\n\\r\\f]+", -1);
       Collections.sort(Arrays.asList(words), String.CASE_INSENSITIVE_ORDER);
-
+      
       String first="", second="";
       if(words.length > 0){
         first = words[0];
+        if(first.length()==0)
+          System.out.printf("query: %s\n", line);
         countWord(first, context);
       }
       for(int i = 1; i < words.length; i++){
         second = words[i];
+        if(second.length()==0)
+          System.out.printf("query: %s\n", line);
         countWord(first + " " + second, context);
         countWord(second, context);
       }
