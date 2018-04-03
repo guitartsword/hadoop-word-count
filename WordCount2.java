@@ -83,7 +83,8 @@ public class WordCount2 {
       for (String pattern : patternsToSkipWord) {
         line = line.replaceAll(" " + pattern + " ", " ");
       }
-      String[] words = line.split("[ \\t\\n\\r\\f]+");
+      line = line.trim();
+      String[] words = line.split("[ \\t\\n\\r\\f]+", -1);
       Collections.sort(Arrays.asList(words), String.CASE_INSENSITIVE_ORDER);
 
       String first="", second="";
